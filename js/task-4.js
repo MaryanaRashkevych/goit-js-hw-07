@@ -1,55 +1,39 @@
-// Напиши стрілочну функцію getTotalBalanceByGender(users, gender), яка прийматиме два параметра:
+// Напиши скрипт управління формою логіна.
 
-// перший параметр users — масив об’єктів користувачів,
-// другий параметр gender — рядок, що зберігає стать.
-// Функція має використовувати ланцюжок виклику методів та повертати загальний баланс користувачів (властивість balance), стать яких (властивість gender) збігається зі значенням параметра gender.
+// <form class="login-form">
+//   <label>
+//     Email
+//     <input type="email" name="email" />
+//   </label>
+//   <label>
+//     Password
+//     <input type="password" name="password" />
+//   </label>
+//   <button type="submit">Log in</button>
+// </form>
 
-// Візьми код нижче і встав після оголошення своєї функції для перевірки коректності її роботи. У консоль будуть виведені результати її роботи.
+// відправлення форми form.login-form повинна відбуватися за подією submit.
+// Під час відправлення форми сторінка не повинна перезавантажуватися.
+// Якщо при сабміті у формі є незаповнені поля, виводь alert з попередженням про те, що 'All form fields must be filled in'. Не додавай на інпути атрибут required, валідація має відбуватися саме через JS.
+// Якщо користувач заповнив усі поля і відправив форму, збери значення полів в об'єкт з двома властивостями, де ключ — це ім'я інпутів, а значення — відповідні значення цих інпутів, очищені від пробілів по краях. Для доступу до елементів форми використовуй властивість elements.
+// При сабміті форми виведи об'єкт із введеними даними в консоль і очисти значення полів форми методом reset.
 
-const getTotalBalanceByGender = (users, gender) => {
-  return users
-    .filter(user => user.gender === gender)
-    .reduce((total, score) => total + score.balance, 0);
-};
+const form = document.querySelector('.login-form');
+form.addEventListener('submit', handleSubmit);
 
-const clients = [
-  {
-    name: 'Moore Hensley',
-    gender: 'male',
-    balance: 2811,
-  },
-  {
-    name: 'Sharlene Bush',
-    gender: 'female',
-    balance: 3821,
-  },
-  {
-    name: 'Ross Vazquez',
-    gender: 'male',
-    balance: 3793,
-  },
-  {
-    name: 'Elma Head',
-    gender: 'female',
-    balance: 2278,
-  },
-  {
-    name: 'Carey Barr',
-    gender: 'male',
-    balance: 3951,
-  },
-  {
-    name: 'Blackburn Dotson',
-    gender: 'male',
-    balance: 1498,
-  },
-  {
-    name: 'Sheree Anthony',
-    gender: 'female',
-    balance: 2764,
-  },
-];
+function handleSubmit(event) {
+  event.preventDefault();
 
-console.log(getTotalBalanceByGender(clients, 'male')); // 12053
+  const elements = event.currentTarget.elements;
 
-console.log(getTotalBalanceByGender(clients, 'female')); // 8863
+  const info = {
+    email: elements.email.value.trim(),
+    password: elements.password.value.trim(),
+  };
+  if (info.email === '' || info.password === '') {
+    alert('All form fields must be filled in');
+    return;
+  }
+  console.log(info);
+  event.currentTarget.reset();
+}

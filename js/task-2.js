@@ -1,37 +1,44 @@
-// Створи клас Storage, який створюватиме об'єкти для управління складом товарів. Клас очікує лише один аргумент — початковий масив товарів, який записується до створеного об'єкта в приватну властивість items.
+// Напиши скрипт для створення галереї зображень на основі масиву даних. HTML містить список ul.gallery.
 
-// Оголоси наступні методи класу:
+// <ul class="gallery"></ul>
 
-// getItems() — повертає масив поточних товарів у приватній властивості items.
-// addItem(newItem) — приймає новий товар newItem і додає його до масиву товарів у приватну властивість items об'єкта.
-// removeItem(itemToRemove) — приймає рядок з назвою товару itemToRemove і видаляє його з масиву товарів у приватній властивості items об'єкта.
+// Використовуй масив об'єктів images для створення елементів <img>, вкладених в <li>.
 
-// Візьми код нижче з ініціалізацією екземпляра й викликами методів і встав його після оголошення класу для перевірки коректності роботи. У консоль будуть виведені результати їх роботи. Будь ласка, нічого там не змінюй.
+// Ти можеш створити й додати HTML-елементи, використовуючи document.createElement() і elem.append() або шаблонні рядки і elem.insertAdjacentHTML().
 
-class Storage {
-  #items;
+// Усі елементи галереї повинні додаватися в DOM за одну операцію додавання.
+// Додай мінімальне оформлення галереї флексбоксами через CSS класи.
 
-  constructor(item) {
-    this.#items = item;
-  }
-  getItems() {
-    return this.#items;
-  }
+const images = [
+  {
+    url: 'https://images.pexels.com/photos/140134/pexels-photo-140134.jpeg?dpr=2&h=750&w=1260',
+    alt: 'White and Black Long Fur Cat',
+  },
+  {
+    url: 'https://images.pexels.com/photos/213399/pexels-photo-213399.jpeg?dpr=2&h=750&w=1260',
+    alt: 'Orange and White Koi Fish Near Yellow Koi Fish',
+  },
+  {
+    url: 'https://images.pexels.com/photos/219943/pexels-photo-219943.jpeg?dpr=2&h=750&w=1260',
+    alt: 'Group of Horses Running',
+  },
+];
+const gallery = document.querySelector('.gallery');
 
-  addItem(newItem) {
-    this.#items.push(newItem);
-  }
-  removeItem(itemToRemove) {
-    const index = this.#items.indexOf(itemToRemove);
-    if (index !== -1) {
-      this.#items.splice(index, 1);
-    }
-  }
-}
+const imgList = images.map(img => {
+  const imgElem = document.createElement('img');
+  imgElem.classList.add('images');
+  imgElem.src = img.url;
+  imgElem.alt = img.alt;
 
-const storage = new Storage(['Nanitoids', 'Prolonger', 'Antigravitator']);
-console.log(storage.getItems()); // ["Nanitoids", "Prolonger", "Antigravitator"]
-storage.addItem('Droid');
-console.log(storage.getItems()); // ["Nanitoids", "Prolonger", "Antigravitator", "Droid"]
-storage.removeItem('Prolonger');
-console.log(storage.getItems()); // ["Nanitoids", "Antigravitator", "Droid"]
+  const liElem = document.createElement('li');
+  liElem.classList.add('list');
+
+  liElem.append(imgElem);
+  return liElem;
+});
+
+console.log(imgList);
+gallery.append(...imgList);
+
+console.log(gallery);
